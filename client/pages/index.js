@@ -13,7 +13,7 @@ export default function Home() {
                 />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <h1>E learning platform</h1>
+            <h4 className={styles.jumbotron}>E learning platform</h4>
         </div>
     );
 }
