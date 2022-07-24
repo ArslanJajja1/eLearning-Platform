@@ -7,19 +7,32 @@ import {
 import Link from "next/link";
 const { Item } = Menu;
 const TopNav = () => {
+    let keyId = 999;
     return (
         <Menu mode="horizontal">
-            <Item icon={<AppstoreOutlined />}>
+            <Item
+                className="d-inline-flex align-items-center"
+                key={`${++keyId}#`}
+                icon={<AppstoreOutlined />}
+            >
                 <Link href="/">
-                    <a>App</a>
+                    <a>Home</a>
                 </Link>
             </Item>
-            <Item icon={<LoginOutlined />}>
+            <Item
+                className="d-inline-flex align-items-center"
+                key={`${++keyId}#`}
+                icon={<LoginOutlined />}
+            >
                 <Link href="/login">
                     <a>Login</a>
                 </Link>
             </Item>
-            <Item icon={<UserAddOutlined />}>
+            <Item
+                className="d-inline-flex align-items-center"
+                key={`${++keyId}#`}
+                icon={<UserAddOutlined />}
+            >
                 <Link href="/register">
                     <a>Register</a>
                 </Link>
