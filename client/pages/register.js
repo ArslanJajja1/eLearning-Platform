@@ -1,7 +1,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import axios from "axios";
-
+import { toast } from "react-toastify";
+import { SyncOutlined } from "@ant-design/icons";
 const register = () => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -20,8 +21,11 @@ const register = () => {
             });
             setLoading(false);
             console.log("Register response ", res);
+            toast.success(res.data.message);
         } catch (error) {
             console.log("Register error", error);
+            const errorMessage = error.response.data.message;
+            toast.error(errorMessage);
             setLoading(false);
         }
     };
@@ -83,10 +87,11 @@ const register = () => {
                                 name.length > 12 ||
                                 !email ||
                                 password.length < 8 ||
-                                password.length > 16
+                                password.length > 16 ||
+                                loading
                             }
                         >
-                            {loading ? "Loading..." : "Submit"}
+                            {loading ? <SyncOutlined spin /> : "Submit"}
                         </button>
                     </div>
                     <p className="text-center mt-4">

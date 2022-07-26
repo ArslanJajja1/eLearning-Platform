@@ -16,7 +16,8 @@ export const register = async (req, res) => {
                 message: "Password is required and must be atleast 8 chars",
             });
         // Check if it is existing user
-        let userExist = await User.findOne({ email }).exec();
+        const userExist = await User.findOne({ email });
+        console.log("IS user EXIST ? ", userExist);
         if (userExist)
             return res
                 .status(400)
@@ -24,12 +25,11 @@ export const register = async (req, res) => {
         // Hash the password
         const hashedPassword = await hashPassword(password);
         // Now , create a user
-        const user = new User({
+        const user = await User.create({
             name,
             email,
             password: hashedPassword,
         });
-        await user.save;
         console.log(user);
         return res.json({ succes: true, message: "User created successfully" });
     } catch (error) {
