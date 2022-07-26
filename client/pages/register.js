@@ -2,24 +2,28 @@ import { useState } from "react";
 import Link from "next/link";
 import axios from "axios";
 
-const initialFieldsValue = {
-    nameError: null,
-    passwordError: null,
-};
 const register = () => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [fieldsError, setFieldsError] = useState(initialFieldsValue);
+    const [loading, setLoading] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
         console.log("Name", name, "email", email, "password", password);
-        const { data } = await axios.post(
-            `http://localhost:8000/api/register`,
-            { name, email, password }
-        );
-        console.log("Register response " + data);
+        try {
+            const res = await axios.post(`http://localhost:8000/api/register`, {
+                name,
+                email,
+                password,
+            });
+            setLoading(false);
+            console.log("Register response ", res);
+        } catch (error) {
+            console.log("Register error", error);
+            setLoading(false);
+        }
     };
 
     return (
@@ -82,7 +86,7 @@ const register = () => {
                                 password.length > 16
                             }
                         >
-                            Submit
+                            {loading ? "Loading..." : "Submit"}
                         </button>
                     </div>
                     <p className="text-center mt-4">
