@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import Link from "next/link";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -11,7 +11,10 @@ const login = () => {
     const router = useRouter();
     // Context api state
     const { state, dispatch } = useContext(Context);
-    console.log("state==>", state);
+    const { user } = state;
+    useEffect(() => {
+        if (user !== null) router.push("/");
+    }, [user]);
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {

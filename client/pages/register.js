@@ -1,14 +1,21 @@
-import { useState } from "react";
+import { useState, useEffect, useContext } from "react";
 import Link from "next/link";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { SyncOutlined } from "@ant-design/icons";
+import { Context } from "../context";
+import { useRouter } from "next/router";
 const register = () => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
-
+    const router = useRouter();
+    const { state, dispatch } = useContext(Context);
+    const { user } = state;
+    useEffect(() => {
+        if (user !== null) router.push("/");
+    }, [user]);
     const handleSubmit = async (e) => {
         e.preventDefault();
         console.log("Name", name, "email", email, "password", password);
