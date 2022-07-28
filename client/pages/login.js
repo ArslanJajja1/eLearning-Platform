@@ -1,11 +1,15 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Link from "next/link";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { Context } from "../context";
 const login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
+    // Context api state
+    const { state, dispatch } = useContext(Context);
+    console.log("state==>", state);
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -16,6 +20,8 @@ const login = () => {
             });
             setLoading(false);
             console.log("Login response ", res);
+            // user = res.data.data
+            dispatch({ type: "LOGIN", payload: res.data.data });
             toast.success(res.data.message);
         } catch (error) {
             console.log("Login error", error);
