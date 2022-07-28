@@ -1,6 +1,8 @@
 import User from "../models/User";
 import { hashPassword, comparePassword } from "../utils/auth";
 import jwt from "jsonwebtoken";
+
+// Register User
 export const register = async (req, res) => {
     try {
         console.log(req.body);
@@ -38,6 +40,7 @@ export const register = async (req, res) => {
     }
 };
 
+// Login User
 export const login = async (req, res) => {
     const { email, password } = req.body;
     try {
@@ -65,5 +68,16 @@ export const login = async (req, res) => {
     } catch (error) {
         console.log("Login error ", error);
         res.status(400).json({ succes: false, message: "Error.Try Again" });
+    }
+};
+
+// Logout user
+
+export const logout = async (req, res) => {
+    try {
+        res.clearCookie("token");
+        return res.json({ succes: true, message: "Logged out successfully" });
+    } catch (error) {
+        console.log(error);
     }
 };
