@@ -3,6 +3,7 @@ import { Menu } from "antd";
 import { Context } from "../context";
 import {
     AppstoreOutlined,
+    CoffeeOutlined,
     LoginOutlined,
     LogoutOutlined,
     UserAddOutlined,
@@ -11,7 +12,7 @@ import Link from "next/link";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
-const { Item } = Menu;
+const { Item, SubMenu } = Menu;
 const TopNav = () => {
     const [current, setCurrent] = useState("");
     const { state, dispatch } = useContext(Context);
@@ -67,13 +68,19 @@ const TopNav = () => {
                 </>
             )}
             {user !== null && (
-                <Item
-                    className="d-inline-flex align-items-center ms-auto"
-                    icon={<LogoutOutlined />}
-                    onClick={logout}
+                <SubMenu
+                    icon={<CoffeeOutlined />}
+                    title={user && user.name}
+                    className=" ms-auto"
                 >
-                    Logout
-                </Item>
+                    <Item
+                        className="d-inline-flex align-items-center"
+                        icon={<LogoutOutlined />}
+                        onClick={logout}
+                    >
+                        Logout
+                    </Item>
+                </SubMenu>
             )}
         </Menu>
     );
