@@ -15,6 +15,7 @@ const { Item } = Menu;
 const TopNav = () => {
     const [current, setCurrent] = useState("");
     const { state, dispatch } = useContext(Context);
+    const { user } = state;
     const router = useRouter();
     const logout = async () => {
         dispatch({
@@ -41,33 +42,39 @@ const TopNav = () => {
                     <a>Home</a>
                 </Link>
             </Item>
-            <Item
-                className="d-inline-flex align-items-center"
-                key="/login"
-                icon={<LoginOutlined />}
-                onClick={(e) => setCurrent(e.key)}
-            >
-                <Link href="/login">
-                    <a>Login</a>
-                </Link>
-            </Item>
-            <Item
-                className="d-inline-flex align-items-center"
-                key="/register"
-                icon={<UserAddOutlined />}
-                onClick={(e) => setCurrent(e.key)}
-            >
-                <Link href="/register">
-                    <a>Register</a>
-                </Link>
-            </Item>
-            <Item
-                className="d-inline-flex align-items-center ms-auto"
-                icon={<LogoutOutlined />}
-                onClick={logout}
-            >
-                Logout
-            </Item>
+            {user === null && (
+                <>
+                    <Item
+                        className="d-inline-flex align-items-center"
+                        key="/login"
+                        icon={<LoginOutlined />}
+                        onClick={(e) => setCurrent(e.key)}
+                    >
+                        <Link href="/login">
+                            <a>Login</a>
+                        </Link>
+                    </Item>
+                    <Item
+                        className="d-inline-flex align-items-center"
+                        key="/register"
+                        icon={<UserAddOutlined />}
+                        onClick={(e) => setCurrent(e.key)}
+                    >
+                        <Link href="/register">
+                            <a>Register</a>
+                        </Link>
+                    </Item>
+                </>
+            )}
+            {user !== null && (
+                <Item
+                    className="d-inline-flex align-items-center ms-auto"
+                    icon={<LogoutOutlined />}
+                    onClick={logout}
+                >
+                    Logout
+                </Item>
+            )}
         </Menu>
     );
 };
