@@ -3,10 +3,12 @@ import Link from "next/link";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { Context } from "../context";
+import { useRouter } from "next/router";
 const login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
+    const router = useRouter();
     // Context api state
     const { state, dispatch } = useContext(Context);
     console.log("state==>", state);
@@ -19,10 +21,13 @@ const login = () => {
                 password,
             });
             setLoading(false);
-            console.log("Login response ", res);
             // user = res.data.data
             dispatch({ type: "LOGIN", payload: res.data.data });
-            toast.success(res.data.message);
+            // save user in local storage
+            window.localStorage.setItem("user", JSON.stringify(res.data.data));
+            // redirect user to homepage
+            router.push("/");
+            toast.success("Logged in successfully");
         } catch (error) {
             console.log("Login error", error);
             const errorMessage = error.response.data.message;
