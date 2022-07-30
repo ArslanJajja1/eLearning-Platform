@@ -72,6 +72,7 @@ const TopNav = () => {
                     icon={<CoffeeOutlined />}
                     title={user && user.name}
                     className=" ms-auto"
+                    key="/user-menu"
                 >
                     <ItemGroup>
                         <Item key="/user">
